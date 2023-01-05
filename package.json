@@ -6,12 +6,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/react-icons": "^3.0.0",
+    "bcryptjs": "^2.4.3",
+    "mongodb": "^4.13.0",
     "mongoose": "^6.8.2",
     "next": "latest",
+    "next-auth": "^4.18.7",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.7.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/node": "18.11.3",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",

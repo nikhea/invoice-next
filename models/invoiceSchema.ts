@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-const InvoiceSchema = new mongoose.Schema(
+const InvoiceSchema = new Schema(
   {
     email: { type: String, required: true },
     invoiceId: { type: String, required: true },
