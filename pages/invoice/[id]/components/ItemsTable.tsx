@@ -15,7 +15,7 @@ const ItemsTable: FC<itemsProps> = ({ invoiceItems }) => {
       <table>
         <thead>
           <tr className="uppercase text-[#333b4d]">
-            <th>Name</th>
+            <th>description</th>
             <th>quantity</th>
             <th>price</th>
             <th>total</th>

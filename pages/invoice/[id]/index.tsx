@@ -4,6 +4,7 @@ import { InvoiceData } from "../../../data/invoiceData";
 import SenderDetails from "./components/SenderDetails";
 import ClientDetails from "./components/ClientDetails";
 import ItemsTable from "./components/ItemsTable";
+import ItemsHeader from "./components/ItemsHeader";
 import ReactToPrint from "react-to-print";
 import { useReactToPrint } from "react-to-print";
 const style = {
@@ -19,7 +20,8 @@ const invoiceSingle = () => {
 
   return (
     <div>
-      <button onClick={handlePrint}>Print this out!</button>{" "}
+      <ItemsHeader handlePrint={handlePrint} />
+  
       <div className={style.container} ref={componentRef}>
         <SenderDetails invoiceSingle={invoiceSingle} />
 
