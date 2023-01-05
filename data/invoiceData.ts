@@ -1,11 +1,15 @@
 export const InvoiceData = [
   {
     id: "1",
+    invoiceNumber: 'RTB080',
+    invoiceTopic:'web design project',
     createdAt: "18 Aug 2021",
     paymentDue: "19 Aug 2021",
     description: "graphice design",
     paymentTerms: 0,
     clientName: "Jensen Huang",
+    senderName: "imonikhea ugbodaga",
+    senderEmail: "imonikhea@gmail.com",
     clientEmail: "jensenh@mail.com",
     status: "paid",
     senderAddress: {
@@ -25,7 +29,19 @@ export const InvoiceData = [
         name: "branding",
         quantity: 2,
         price: 438534,
-        total: 438534,
+        // total: 438534,
+      },
+      {
+        name: "marketing",
+        quantity: 2,
+        price: 32134,
+        // total: 438534,
+      },
+      {
+        name: "social",
+        quantity: 3,
+        price: 21224,
+        // total: 438534,
       },
     ],
     total: 93279350,
