@@ -39,28 +39,28 @@ const InvoiceListItem: FC<InvoiceProps> = ({ id, status, clientName }) => {
         : null,
   };
   return (
-    <Link href={`invoice/${id}`}  >
-    <div className={style.Bgcontainer}>
-      <div className={style.invoiceContainer}>
-        <p className={style.id}>
-          # <span className={style.idNumber}>rt3038</span>
-        </p>
-        <p className={style.date}>due 19 aug 2021</p>
-        <h3 className={style.name}>{clientName}</h3>
-        {/* <div className="flex justify-between items-center"> */}
-        <p className={style.price}> $1,800.90</p>
-        {/* @ts-ignore */}
-        <p className={style.status} style={statusStyle}>
+    <Link href={`invoice/${id}`}>
+      <div className={style.Bgcontainer}>
+        <div className={style.invoiceContainer}>
+          <p className={style.id}>
+            # <span className={style.idNumber}>rt3038</span>
+          </p>
+          <p className={style.date}>due 19 aug 2021</p>
+          <h3 className={style.name}>{clientName}</h3>
+          {/* <div className="flex justify-between items-center"> */}
+          <p className={style.price}> $1,800.90</p>
           {/* @ts-ignore */}
-          <BsDot className={style.dot} style={iconStyle} />
-          paid
-        </p>
-        {/* </div> */}
-        <p className="order-last">
-          <MdOutlineKeyboardArrowRight className={style.arrow} />
-        </p>
+          <p className={style.status} style={statusStyle}>
+            {/* @ts-ignore */}
+            <BsDot className={style.dot} style={iconStyle} />
+            paid
+          </p>
+          {/* </div> */}
+          <p className="order-last">
+            <MdOutlineKeyboardArrowRight className={style.arrow} />
+          </p>
+        </div>
       </div>
-    </div>
     </Link>
   );
 };
