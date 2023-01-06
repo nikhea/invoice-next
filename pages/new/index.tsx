@@ -1,8 +1,10 @@
 import React from 'react'
-
+import FormInputs from "./form"
 const CreateInvoice = () => {
   return (
-    <div>CreateInvoice</div>
+    <div> 
+      <FormInputs/>
+      </div>
   )
 }
 
