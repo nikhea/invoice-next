@@ -83,13 +83,11 @@ const InvoiceForm: FC = () => {
         </label>
       </span>
       <br />
-      <label>
+      {/* <label>
         <h1>Description</h1>
-
-        {/* <input {...register("description")} /> */}
-        <textarea {...register("description")}/>
+         <textarea {...register("description")}/>
         {errors.description && <span>{errors.description.message}</span>}
-      </label>
+      </label> */}
       <br />
       {/* <label>
         <h1>Payment Terms</h1>
@@ -154,6 +152,8 @@ const InvoiceForm: FC = () => {
       <br /> */}
 
       <br />
+   
+      <br/>
       <fieldset>
         <legend>Client Address</legend>
         <span>     <label>
@@ -188,7 +188,12 @@ const InvoiceForm: FC = () => {
             <span>{errors.clientAddress.country.message}</span>
           )}
         </label></span>
-     
+        <label >
+        <h1 className="mt-5 mb-2">Description</h1>
+
+        <textarea {...register("description")}/>
+        {errors.description && <span>{errors.description.message}</span>}
+      </label>
       </fieldset>
       <br />
       {fields.map((item, index) => (
@@ -247,17 +252,19 @@ const InvoiceForm: FC = () => {
         </div>
       ))}
       <br />
-      {/* @ts-ignore */}
+      <span>   {/* @ts-ignore */}
+
       <button className={FormStyle.createIcon}  type="button" onClick={() => append({ id: uuidv4() })}>
       <AiFillPlusCircle   size={20} style={{marginRight: '12px'}} />    <span>Add an item</span>
       </button>
       <br />
       <label>
-        <h1>total</h1>
-        <input type="number" {...register(`total`)} />
+        {/* <h1>total</h1> */}
+        <input type="number" {...register(`total`)}   placeholder="Total Amount"  />
         {errors.total && <span>{errors.total.message}</span>}
       </label>
-      <br />
+      <br /></span>
+   
       <input type="submit" />
     </form>
   );
