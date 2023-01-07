@@ -1,0 +1,39 @@
+.formContainer {
+  @apply w-[60%] m-auto  shadow-md bg-white rounded-[10px] my-32 p-10;
+
+  & label {
+    @apply w-[48%];
+    & h1 {
+      @apply block capitalize;
+    }
+  }
+  & legend {
+    @apply text-center py-5 text-xl;
+  }
+  & span {
+    @apply flex  justify-between;
+  }
+  & input,
+  textarea {
+    @apply my-[10px]  py-[15px] px-[23px]  
+   text-[.9375rem]   pr-[23px] outline-none  bg-[#f1f1f1] outline-none text-[#9a9a9a]
+   border border-[#C4C4C4] border-solid bg-white text-black  focus:outline-none focus:border-sky-500
+   rounded-[10px] w-full;
+    &[type="submit"] {
+      @apply bg-green-500 uppercase text-white text-base;
+    }
+  }
+  & textarea {
+    @apply min-h-[30vh];
+  }
+  .addContainer {
+    @apply  flex items-center justify-center;
+    & button {
+      // @apply ;
+    
+    }
+  }
+  & .createIcon {
+    @apply  text-red-500 text-center flex items-center justify-center w-full;
+  }
+}

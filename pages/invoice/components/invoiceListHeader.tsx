@@ -59,24 +59,24 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
       onSelect={onSelect}
       className="min-w-[200px] mx-auto  flex flex-col capitalize"
     >
-      <MenuItem key="0" className="w-full flex items-center justify-cente ">
+      <MenuItem key="0" className="flex items-center w-full justify-cente ">
         <p className="mx-3 text-[1rem] mt-4">
           <input type="checkbox" /> all
         </p>
       </MenuItem>
-      <MenuItem key="1" className="w-full flex items-center justify-cente ">
+      <MenuItem key="1" className="flex items-center w-full justify-cente ">
         <p className="mx-3 text-[1rem] mt-4">
           <input type="checkbox" /> paid
         </p>
       </MenuItem>
       {/* <Divider /> */}
-      <MenuItem key="2" className="w-full flex items-center justify-cente">
+      <MenuItem key="2" className="flex items-center w-full justify-cente">
         <p className="mx-3 text-[1rem] mt-4">
           {" "}
           <input type="checkbox" /> pending
         </p>
       </MenuItem>
-      <MenuItem key="3" className="w-full flex items-center justify-cente">
+      <MenuItem key="3" className="flex items-center w-full justify-cente">
         <p className="mx-3 text-[1rem] mt-4">
           {" "}
           <input type="checkbox" /> draft
@@ -98,7 +98,7 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
           {/* {isSmallScreen && <> {invoiceData.length} Invoices</> } */}
         </p>
       </div>
-      <div className="flex justify-between items-center ">
+      <div className="flex items-center justify-between ">
         <p className={style.filterTitle}>filter by status</p>
         <Dropdown
           trigger={["click"]}
@@ -113,9 +113,11 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
             <MdOutlineKeyboardArrowDown className={style.arrow} />
           )}
         </Dropdown>
-        <button className={style.create}>
-          <AiFillPlusCircle className={style.createIcon} /> new invoices
-        </button>
+        <Link href="/new">
+          <button className={style.create}>
+            <AiFillPlusCircle  className={style.createIcon} /> new invoices
+          </button>
+        </Link>
       </div>
     </div>
   );
