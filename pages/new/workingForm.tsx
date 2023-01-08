@@ -4,11 +4,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import FormStyle from "./form.module.scss";
 import { FC } from "react";
 import { useEffect, useRef } from "react";
+import  Link  from "next/link";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useFormPersist from "react-hook-form-persist";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import { FormData } from "./FormData";
 import { invoiceSchema } from "./invoiceFormSchema";
 import { MdDeleteForever } from "react-icons/md";
@@ -18,6 +19,9 @@ import {
   formatToCurrency,
   calculateTotalAmount,
 } from "../../lib/formateNumbers";
+
+import es from "date-fns/locale/es";
+registerLocale("es", es);
 function uniqueNumber(count: any) {
   let defaultNumber = 4413277523420;
   let convertToArray = defaultNumber.toString().split("");
@@ -69,11 +73,11 @@ const mainForm = () => {
   }, [priceInput, quantityInput]);
 
   if (typeof window !== "undefined") {
-  useFormPersist("storageInvoiceData", {
-    watch,
-    setValue,
-    storage: window.localStorage,
-  });
+    useFormPersist("storageInvoiceData", {
+      watch,
+      setValue,
+      storage: window.localStorage,
+    });
   }
 
   const { fields, append, remove } = useFieldArray({
@@ -125,6 +129,7 @@ const mainForm = () => {
     setValue("total", parseInt(p as any));
   }
   return (
+    <div>
     <form onSubmit={handleSubmit(onSubmit)} className={FormStyle.formContainer}>
       <span>
         {" "}
@@ -162,6 +167,8 @@ const mainForm = () => {
             render={({ field }) => (
               <DatePicker
                 placeholderText="Select date"
+                dateFormat="yyyy-MM-dd"
+                locale="es"
                 onChange={(date) => field.onChange(date)}
                 selected={field.value}
               />
@@ -177,6 +184,8 @@ const mainForm = () => {
             name="paymentDue"
             render={({ field }) => (
               <DatePicker
+                locale="es"
+                dateFormat="yyyy-MM-dd"
                 placeholderText="Select date"
                 onChange={(date) => field.onChange(date)}
                 selected={field.value}
@@ -199,7 +208,7 @@ const mainForm = () => {
     </label>
     <br /> */}
       <fieldset>
-        <legend>Sender Address</legend>
+        <legend>Sender Details</legend>
         <span>
           {" "}
           <label>
@@ -239,35 +248,26 @@ const mainForm = () => {
           </label>
         </span>
       </fieldset>
-      <span>
-        <label>
-          <h1 className={FormStyle.clientDetails}> Client Name</h1>
-          <input {...register("clientName")} />
-          {errors.clientName && <span>{errors.clientName.message}</span>}
-        </label>
-        <br />
-        <label>
-          <h1 className={FormStyle.clientDetails}>Client Email </h1>
-          <input type="email" {...register("clientEmail")} />
-          {errors.clientEmail && <span>{errors.clientEmail.message}</span>}
-        </label>
-      </span>
-
-      {/* <br />
-      <label>
-        <h1> Status </h1>
-        <input {...register("status")} />
-        {errors.status && <span>{errors.status.message}</span>}
-      </label>
-      <br /> */}
 
       <br />
 
       <br />
       <fieldset>
-        <legend>Client Address</legend>
+        <legend>Client Details</legend>
         <span>
-          {" "}
+          <label>
+            <h1 className={FormStyle.clientDetails}> Client Name</h1>
+            <input {...register("clientName")} />
+            {errors.clientName && <span>{errors.clientName.message}</span>}
+          </label>
+          <br />
+          <label>
+            <h1 className={FormStyle.clientDetails}>Client Email </h1>
+            <input type="email" {...register("clientEmail")} />
+            {errors.clientEmail && <span>{errors.clientEmail.message}</span>}
+          </label>
+        </span>
+        <span>
           <label>
             <h1> Street</h1>
             <input {...register("clientAddress.street")} />
@@ -284,7 +284,6 @@ const mainForm = () => {
             )}
           </label>
         </span>
-
         <br />
         <span>
           {" "}
@@ -377,6 +376,15 @@ const mainForm = () => {
 
       <input type="submit" />
     </form>
+    <Link href="/preview">
+          <button
+            className="bg-blue-500 py-3 px-3 capitalize text-white rounded-[10%]"
+            onClick={handlePrint}
+          >
+            preview
+          </button>
+        </Link>
+    </div>
   );
 };
 

@@ -62,7 +62,7 @@ const SenderDetails: FC<senderProps> = ({ invoiceSingle }) => {
         <h1 className="text-[22px] capitalize font-[500]  text-[#333b4d]">
           invoice #
         </h1>
-        <p className={style.invoiceNumber}>{invoiceSingle.invoiceNumber}</p>
+        <p className={style.invoiceNumber}>{invoiceSingle.invoiceId}</p>
         <p>{invoiceSingle.invoiceTopic}</p>
         {/* @ts-ignore */}
         <p className={style.status} style={statusStyle}>
