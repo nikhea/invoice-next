@@ -1,11 +1,14 @@
-import React from 'react'
-import FormInputs from "./form"
+import React from "react";
+import FormInputs from "./workingForm";
 const CreateInvoice = () => {
-  return (
-    <div> 
-      <FormInputs/>
-      </div>
-  )
-}
+  // console.log("dfhdfg");
 
-export default CreateInvoice
+  return (
+    <div>
+      sou
+      <FormInputs />
+    </div>
+  );
+};
+
+export default CreateInvoice;

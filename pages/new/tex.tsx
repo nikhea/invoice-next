@@ -1,3 +1,4 @@
+import React from "react";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import "react-datepicker/dist/react-datepicker.css";
 import FormStyle from "./form.module.scss";
@@ -12,33 +13,56 @@ import { FormData } from "./FormData";
 import { invoiceSchema } from "./invoiceFormSchema";
 import { MdDeleteForever } from "react-icons/md";
 import { AiFillPlusCircle } from "react-icons/ai";
-
-console.log("created")
-const InvoiceForm: FC = () => {
-
+import {
+  formatItemTotal,
+  formatToCurrency,
+  calculateTotalAmount,
+} from "../../lib/formateNumbers";
+const mainForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors},
+    formState: { errors },
     watch,
     setValue,
-    control
+    control,
   } = useForm<FormData>({
     resolver: yupResolver(invoiceSchema),
   });
-
+  const { total, items } = watch();
   // useEffect(() => {
-   
-    
-  // }, [priceInput, quantityInput]);
+  //   let priceInput, quantityInput, ItemTotal;
+  //   if(items !== undefined){
+  //     for (let item of items) {
+  //       let {price, quantity} = item;
+  //       if (price !== undefined || quantity !== undefined){
+  //         ItemTotal = formatItemTotal(price, quantity)
+  //       }
+  //     }
+  //   }
+  //      setValue("items.total", ItemTotal)
+
+  //   }, [priceInput, quantityInput]);
+
+
+    //       let priceInput= items[0].price
+    //   let quantityInput = items[0].quantity
+    //   console.log(total, items)
+    // useEffect(() => {
+    //   console.log(items)
+    //   let p = calculateTotalAmount(items)
+    //    setValue("total", parseInt(p))
+
+    // }, [priceInput, quantityInput]);
+  }
+
   if (typeof window !== "undefined") {
-    // useFormPersist("iustorageInvoice", {
+    // useFormPersist("storageInvoice", {
     //   watch,
     //   setValue,
     //   storage: window.localStorage,
     // });
   }
-
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -49,15 +73,16 @@ const InvoiceForm: FC = () => {
     // console.log(data);
   }
   function onItemAdd() {
-    {/* @ts-ignore */ }
+    {
+      /* @ts-ignore */
+    }
     append({ id: uuidv4() });
-    setValue("total", 454)
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={FormStyle.formContainer}>
       <label>
         <h1>ID</h1>
-        
+
         <input {...register("id")} />
         {errors.id && <span>{errors.id.message}</span>}
       </label>
@@ -96,17 +121,17 @@ const InvoiceForm: FC = () => {
       </span>
       <br />
       {/* <label>
-        <h1>Description</h1>
-         <textarea {...register("description")}/>
-        {errors.description && <span>{errors.description.message}</span>}
-      </label> */}
+      <h1>Description</h1>
+       <textarea {...register("description")}/>
+      {errors.description && <span>{errors.description.message}</span>}
+    </label> */}
       <br />
       {/* <label>
-        <h1>Payment Terms</h1>
-        <input type="number" {...register("paymentTerms")} />
-        {errors.paymentTerms && <span>{errors.paymentTerms.message}</span>}
-      </label>
-      <br /> */}
+      <h1>Payment Terms</h1>
+      <input type="number" {...register("paymentTerms")} />
+      {errors.paymentTerms && <span>{errors.paymentTerms.message}</span>}
+    </label>
+    <br /> */}
       <fieldset>
         <legend>Sender Address</legend>
         <span>
@@ -182,8 +207,8 @@ const InvoiceForm: FC = () => {
             <h1> Street</h1>
             <input {...register("clientAddress.street")} />
             {/* {errors.clientAddress && erroexport default InvoiceFormrs.clientAddress.street && (
-            <span>{errors.clientAddress.street.message}</span>
-          )} */}
+          <span>{errors.clientAddress.street.message}</span>
+        )} */}
           </label>
           <br />
           <label>
@@ -227,7 +252,7 @@ const InvoiceForm: FC = () => {
           <label>
             Name
             {/* @ts-ignore */}
-            <input type="text" {...register(`items[${index}].name`)} /> 
+            <input type="text" {...register(`items[${index}].name`)} />
           </label>
           <br />
           <label>
@@ -236,7 +261,7 @@ const InvoiceForm: FC = () => {
             <input
               type="number"
               {...register(`items[${index}].quantity`)}
-            
+              defaultValue={0}
             />
           </label>
           <br />
@@ -246,21 +271,20 @@ const InvoiceForm: FC = () => {
             <input
               type="number"
               {...register(`items[${index}].price`)}
-            
+              defaultValue={0}
             />
           </label>
           <br />
           <label>
             Total
             {/* @ts-ignore */}
-           {/* { parseInt(items[${index}].quantity  * items[${index}].price)} */}
+            {/* { parseInt(items[${index}].quantity  * items[${index}].price)} */}
             <input
               type="number"
               {...register(`items[${index}].total`)}
               disabled
               className={FormStyle.disabled}
             />
-         
           </label>
           <br />
           <button type="button" onClick={() => remove(index)}>
@@ -286,7 +310,7 @@ const InvoiceForm: FC = () => {
             type="number"
             {...register(`total`)}
             placeholder="Total Amount"
-            // disabled
+            disabled
             className={FormStyle.disabled}
           />
           {errors.total && <span>{errors.total.message}</span>}
@@ -298,4 +322,5 @@ const InvoiceForm: FC = () => {
     </form>
   );
 };
-export default InvoiceForm;
+
+export default mainForm;

@@ -12,15 +12,18 @@ import { FormData } from "./FormData";
 import { invoiceSchema } from "./invoiceFormSchema";
 import { MdDeleteForever } from "react-icons/md";
 import { AiFillPlusCircle } from "react-icons/ai";
-
+import { formatItemTotal } from "../../lib/formateNumbers";
 console.log("created")
 const InvoiceForm: FC = () => {
+  // const priceInput = useRef<HTMLInputElement>(null);
+  // const quantityInput = useRef<HTMLInputElement>(null);
+  // const totalInput = useRef<HTMLInputElement>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors},
-    watch,
+    // watch,
     setValue,
     control
   } = useForm<FormData>({
@@ -31,13 +34,13 @@ const InvoiceForm: FC = () => {
    
     
   // }, [priceInput, quantityInput]);
-  if (typeof window !== "undefined") {
-    // useFormPersist("iustorageInvoice", {
+  // if (typeof window !== "undefined") {
+    // useFormPersist("storageInvoice", {
     //   watch,
     //   setValue,
     //   storage: window.localStorage,
     // });
-  }
+  // }
 
 
   const { fields, append, remove } = useFieldArray({
@@ -51,16 +54,15 @@ const InvoiceForm: FC = () => {
   function onItemAdd() {
     {/* @ts-ignore */ }
     append({ id: uuidv4() });
-    setValue("total", 454)
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={FormStyle.formContainer}>
-      <label>
+      {/* <label>
         <h1>ID</h1>
         
         <input {...register("id")} />
         {errors.id && <span>{errors.id.message}</span>}
-      </label>
+      </label> */}
       <br />
       <span>
         <label>
@@ -164,12 +166,12 @@ const InvoiceForm: FC = () => {
       </span>
 
       <br />
-      <label>
+      {/* <label>
         <h1> Status </h1>
         <input {...register("status")} />
         {errors.status && <span>{errors.status.message}</span>}
       </label>
-      <br />
+      <br /> */}
 
       <br />
 
@@ -236,7 +238,7 @@ const InvoiceForm: FC = () => {
             <input
               type="number"
               {...register(`items[${index}].quantity`)}
-            
+              defaultValue={0}
             />
           </label>
           <br />
@@ -246,20 +248,20 @@ const InvoiceForm: FC = () => {
             <input
               type="number"
               {...register(`items[${index}].price`)}
-            
+              defaultValue={0}
             />
           </label>
           <br />
           <label>
             Total
             {/* @ts-ignore */}
-           {/* { parseInt(items[${index}].quantity  * items[${index}].price)} */}
-            <input
+           { parseInt(items[${index}].quantity  * items[${index}].price)}
+            {/* <input
               type="number"
               {...register(`items[${index}].total`)}
               disabled
               className={FormStyle.disabled}
-            />
+            /> */}
          
           </label>
           <br />
@@ -281,12 +283,12 @@ const InvoiceForm: FC = () => {
         </button>
         <br />
         <label>
-          <h1>total</h1>
+          {/* <h1>total</h1> */}
           <input
             type="number"
             {...register(`total`)}
             placeholder="Total Amount"
-            // disabled
+            disabled
             className={FormStyle.disabled}
           />
           {errors.total && <span>{errors.total.message}</span>}
@@ -299,3 +301,44 @@ const InvoiceForm: FC = () => {
   );
 };
 export default InvoiceForm;
+
+// onClick={() => append({ id: Date.now() })}
+{
+  /* @ts-ignore */
+}
+// {errors.items &&
+//   errors.items[index] &&
+//   errors.items[index].price && (
+//     <span>{errors.items[index].price.message}</span>
+//   )}
+
+{
+  /* @ts-ignore */
+}
+// {errors.items &&
+//   errors.items[index] &&
+//   errors.items[index].total && (
+//     <span>{errors.items[index].total.message}</span>
+//   )}
+
+{
+  /* @ts-ignore */
+}
+//  {errors.items &&
+//   errors.items[index] &&
+//   errors.items[index].quantity && (
+//     <span>{errors.items[index].quantity.message}</span>
+//   )}
+
+// defaultValue= {formatItemTotal(items[${index}].price, items[${index}].quantity)}}
+
+{
+  /* {errors.items &&
+              errors.items[index] &&
+              errors.items[index].name && (
+                <span>{errors.items[index].name.message}</span>
+              )} */
+}
+{
+  /* name={`items[${index}].name`}  */
+}

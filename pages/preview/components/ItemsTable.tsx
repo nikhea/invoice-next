@@ -4,7 +4,7 @@ import {
   // numberWithCommas,
   formatToCurrency,
   calculateTotalAmount,
-} from "../../../../lib/formateNumbers";
+} from "../../../lib/formateNumbers";
 // import "./styleTable.module.css";
 interface itemsProps {
   invoiceItems: any;

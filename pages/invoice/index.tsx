@@ -10,20 +10,21 @@ import Link from "next/link";
 const style = {
   container: `w-[90%] md:w-[80%] m-auto my-5`,
 };
-const Invoice: FC<InvoiceProps> = (invoice) => {
-  const [invoiceDataState, setInvoiceDataState] = useState(InvoiceData);
+const Invoice: FC<InvoiceProps> = () => {
+  let invoiceData = InvoiceData;
+  const [invoiceDataState, setInvoiceDataState] = useState(invoiceData);
   const filterStatus = (status: string) => {
-    const result = InvoiceData.filter((curData) => {
+    const result = invoiceData.filter((curData: { status: string }) => {
       return curData.status === status;
     });
     if (!status) {
-      setInvoiceDataState(InvoiceData);
+      setInvoiceDataState(invoiceData);
     } else {
       setInvoiceDataState(result);
     }
     // console.log(status);
   };
-  const invoiceData = invoiceDataState.map((invoice) => (
+  const invoiceDataDisplay = invoiceDataState.map((invoice) => (
     <div key={invoice.id}>
       <InvoiceListItem
         id={invoice.id}
@@ -39,9 +40,13 @@ const Invoice: FC<InvoiceProps> = (invoice) => {
         filterStatus={filterStatus}
         setInvoiceDataState={setInvoiceDataState}
       />
-      {invoiceData}
+      {invoiceDataDisplay}
     </div>
   );
 };
 
 export default Invoice;
+export async function getServerSideProps() {
+  let invoiceData = InvoiceData;
+  return { props: { invoiceData } };
+}
