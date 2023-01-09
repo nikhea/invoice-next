@@ -4,7 +4,7 @@ import { BsDot } from "react-icons/bs";
 import Link from "next/link";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 const style = {
-  Bgcontainer: `shadow-md bg-white bg-white  md:w-[80%] m-auto rounded my-5 px-6`,
+  Bgcontainer: `shadow-md bg-white bg-white  md:w-[80%] m-auto rounded my-20 px-6`,
   invoiceContainer: `grid grid-cols-7 justify-between lg:flex justify-between flex-col md:flex-row items-center [&>*]:py-3  md:py-8 x-5 capitalize text-[1rem] font-light`,
   id: `col-span-2 order-1 text-[#888eb0] flex items-center  text-[.75rem] leading-[.9375rem] tracking-[-.25px]`,
   idNumber: `text-black uppercase font-[700]`,
