@@ -395,11 +395,6 @@ const mainForm = () => {
 
         <input type="submit" />
       </form>
-      <Link href="/preview">
-        <button className="bg-blue-500 py-3 px-3 capitalize text-white rounded-[10%]">
-          preview
-        </button>
-      </Link>
     </div>
   );
 };

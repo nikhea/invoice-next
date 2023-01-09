@@ -8,7 +8,8 @@ import ItemsHeader from "./components/ItemsHeader";
 import ReactToPrint from "react-to-print";
 import { useReactToPrint } from "react-to-print";
 const style = {
-  container: `w-[85%]  m-auto my-20 bg-white shadow-sm p-10 flex flex-col rounded-[20px]`,
+  container: `w-[90%] md:w-[80%]  m-auto bg-white shadow-sm p-10 flex flex-col rounded-[20px] my-16`,
+  spacingTop: `mt-32`,
 };
 
 const invoiceSingle = () => {
@@ -33,7 +34,7 @@ const invoiceSingle = () => {
   console.log(invoiceSingle.status);
 
   return (
-    <div>
+    <div className={style.spacingTop}>
       {invoiceSingle === null ? (
         <div>no data</div>
       ) : (

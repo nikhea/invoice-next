@@ -8,7 +8,7 @@ import InvoiceListHeader from "./components/invoiceListHeader";
 import Link from "next/link";
 
 const style = {
-  container: `w-[90%] md:w-[80%] m-auto my-5`,
+  container: `w-[90%] md:w-[80%] m-auto  mt-32`,
 };
 const Invoice: FC<InvoiceProps> = () => {
   let invoiceData = InvoiceData;

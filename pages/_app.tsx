@@ -1,18 +1,16 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Link from "next/link";
+import NavBar from "../components/NavBar";
 function MyApp({ Component, pageProps }: AppProps) {
   const Layout = Component.Layout || EmptyLayout;
   return (
-    <>
-      {/* <nav>
-        <Link href="/">Home</Link>
-        <Link href="/invoice">invoice</Link>
-      </nav> */}
+    <div className=" relative">
+      <NavBar />
       {/* <Layout> */}
       <Component {...pageProps} />
       {/* </Layout> */}
-    </>
+    </div>
   );
 }
 

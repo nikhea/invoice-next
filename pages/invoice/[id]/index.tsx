@@ -8,7 +8,8 @@ import ItemsHeader from "./components/ItemsHeader";
 import ReactToPrint from "react-to-print";
 import { useReactToPrint } from "react-to-print";
 const style = {
-  container: `w-[80%]  m-auto my-20 bg-white shadow-sm p-10 flex flex-col rounded-[20px]`,
+  container: `w-[80%]  m-auto my-16 bg-white shadow-sm p-10 flex flex-col rounded-[20px]`,
+  spacingTop: `mt-32`,
 };
 
 const invoiceSingle = () => {
@@ -19,9 +20,9 @@ const invoiceSingle = () => {
   });
 
   return (
-    <div>
+    <div className={style.spacingTop}>
       <ItemsHeader handlePrint={handlePrint} />
-  
+
       <div className={style.container} ref={componentRef}>
         <SenderDetails invoiceSingle={invoiceSingle} />
 
