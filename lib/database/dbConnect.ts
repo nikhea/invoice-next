@@ -7,17 +7,26 @@ if (!MONGODB_URI) {
     "Please define the MONGODB_URI environment variable inside .env.local"
   );
 }
+interface IMongoose {
+  conn: mongoose.Connection;
+  promise: Promise<mongoose.Connection>;
+}
+
+declare global {
+  const mongoose: IMongoose;
+}
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-let cached: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null } = global.mongoose;
+let cached: IMongoose = global.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = global.mongoose = { conn: any, promise: any };
 }
+
 async function dbConnect(): Promise<mongoose.Connection> {
   if (cached.conn) {
     return cached.conn;
@@ -28,7 +37,7 @@ async function dbConnect(): Promise<mongoose.Connection> {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI as any, opts).then((mongoose) => {
       return mongoose;
     });
   }
