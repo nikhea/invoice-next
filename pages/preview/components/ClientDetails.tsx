@@ -2,6 +2,7 @@ import { FC } from "react";
 // import { BsDot } from "react-icons/bs";
 // import Link from "next/link";
 // import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import moment from "moment";
 interface clientProps {
   invoiceSingle: any;
 }
@@ -26,7 +27,7 @@ const clientDetails: FC<clientProps> = ({ invoiceSingle }) => {
   return (
     <div className={style.container}>
       <div>
-        <h3 className="text-black text-3xl uppercase mb-3">Bill To :</h3>
+        <h3 className="mb-3 text-3xl text-black uppercase">Bill To :</h3>
         <h1 className={style.name}>{invoiceSingle.clientName}</h1>
         <p className={style.email}>{invoiceSingle.clientEmail}</p>
         <div className={style.items}>
@@ -42,13 +43,13 @@ const clientDetails: FC<clientProps> = ({ invoiceSingle }) => {
         <p className="text-[15px]">
           invoice date :{" "}
           <span className="text-[#333b4d] bloc text-[18px]">
-            {invoiceSingle.createdAt}
+            {moment(invoiceSingle.createdAt).format("MM/DDD/yyyy")}
           </span>
         </p>
         <p className="text-[15px]">
           due date :{" "}
           <span className="text-[#333b4d] bloc text-[18px]">
-            {invoiceSingle.paymentDue}
+            {moment(invoiceSingle.paymentDue).format("MM/DD/yyyy")}
           </span>
         </p>
       </div>

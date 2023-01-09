@@ -10,6 +10,8 @@
     "@types/react-icons": "^3.0.0",
     "bcryptjs": "^2.4.3",
     "currency-symbol-map": "^5.1.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.40",
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.2",
     "next": "latest",

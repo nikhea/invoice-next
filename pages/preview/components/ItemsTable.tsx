@@ -11,7 +11,7 @@ interface itemsProps {
 }
 const ItemsTable: FC<itemsProps> = ({ invoiceItems }) => {
   return (
-    <div>
+    <div className="mb-20 mt-28">
       <table>
         <thead>
           <tr className="uppercase text-[#333b4d]">

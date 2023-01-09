@@ -4,6 +4,8 @@ export interface FormData {
   paymentDue: Date;
   description: string;
   paymentTerms: number;
+  senderName: string;
+  senderEmail: string;
   clientName: string;
   clientEmail: string;
   status: string;

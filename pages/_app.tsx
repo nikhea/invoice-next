@@ -5,12 +5,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   const Layout = Component.Layout || EmptyLayout;
   return (
     <>
-      <nav>
+      {/* <nav>
         <Link href="/">Home</Link>
         <Link href="/invoice">invoice</Link>
-      </nav>
+      </nav> */}
       {/* <Layout> */}
-        <Component {...pageProps} />
+      <Component {...pageProps} />
       {/* </Layout> */}
     </>
   );

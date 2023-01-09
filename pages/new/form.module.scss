@@ -27,8 +27,15 @@
     &[type="submit"] {
       @apply bg-green-500 uppercase text-white text-base;
     }
+    &[type="date"] {
+      @apply uppercase;
+    }
   }
-
+  select > * {
+    @apply py-5 px-3;
+  }
+  option {
+  }
   textarea {
     @apply min-h-[20vh];
   }

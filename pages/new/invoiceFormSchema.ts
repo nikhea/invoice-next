@@ -9,12 +9,21 @@ export const invoiceSchema = yup.object().shape({
   paymentDue: yup.date().required("Payment due date is required"),
   description: yup.string().required("Description is required"),
   paymentTerms: yup.number().required("Payment terms are required"),
+  senderName: yup.string().required("sender name is required"),
+  senderEmail: yup
+    .string()
+    .email("Invalid email")
+    .required("sender email is required"),
   clientName: yup.string().required("Client name is required"),
   clientEmail: yup
     .string()
     .email("Invalid email")
     .required("Client email is required"),
-  status: yup.string().oneOf(options).required("Status is required").default(options[0]),
+  status: yup
+    .string()
+    .oneOf(options)
+    .required("Status is required")
+    .default(options[0]),
   senderAddress: yup
     .object()
     .shape({
