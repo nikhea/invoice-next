@@ -58,7 +58,6 @@ const mainForm = () => {
 
     setValue("invoiceId", generateInvoiceNumber);
   }, []);
-  console.log(watch());
   const { items, createdAt } = watch();
 
   let priceInput: number | string | any, quantityInput: number | string | any;
@@ -91,7 +90,6 @@ const mainForm = () => {
   });
 
   const handleItemChange = (index: number) => {
-    console.log(index, "handleItemChange");
 
     // Get the price and quantity values
     //@ts-ignore
@@ -122,7 +120,7 @@ const mainForm = () => {
     watchFields();
   }, [fields, priceInput, quantityInput]); // Only re-run the effect if the fields array changes
   function onSubmit(data: FormData) {
-    console.log(data);
+    // console.log(data);
   }
   function onItemAdd() {
     {

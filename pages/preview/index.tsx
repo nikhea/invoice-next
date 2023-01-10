@@ -5,7 +5,6 @@ import SenderDetails from "../../components/preview/components/SenderDetails";
 import ClientDetails from "../../components/preview/components/ClientDetails";
 import ItemsTable from "../../components/preview/components/ItemsTable";
 import ItemsHeader from "../../components/preview/components/ItemsHeader";
-import ReactToPrint from "react-to-print";
 import { useReactToPrint } from "react-to-print";
 const style = {
   container: `w-[90%] md:w-[80%]  m-auto bg-white shadow-sm p-10 flex flex-col rounded-[20px] my-16`,
@@ -31,7 +30,7 @@ const invoiceSingle = () => {
 
   if (!invoiceSingle) return;
 
-  console.log(invoiceSingle.status);
+
 
   return (
     <div className={style.spacingTop}>
