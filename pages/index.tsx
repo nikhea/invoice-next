@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import BgImage from "../public/images/bg.jpg";
-import Invoice from "../models/invoiceSchema";
+
 
 const style = {
   bgImage: `overflow-hidden w-full h-screen flex items-center justify-between  bg-cover bg-center bg-no-repeat relative bg-fixed object-content z-50 bg-[url('https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlJTIwaW4lMjBtZWV0aW5ncyUyMHdpdGglMjBsYXB0b3BzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60')]`,

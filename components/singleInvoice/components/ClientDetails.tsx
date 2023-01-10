@@ -1,8 +1,4 @@
 import { FC } from "react";
-import { InvoiceProps } from "../../../types";
-import { BsDot } from "react-icons/bs";
-import Link from "next/link";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 interface clientProps {
   invoiceSingle: any;
 }

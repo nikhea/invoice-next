@@ -5,7 +5,7 @@ import { InvoiceProps } from "../../types";
 import InvoiceListItem from "../../components/invoices/components/InvoiceListItem";
 import { InvoiceData } from "../../data/invoiceData";
 import InvoiceListHeader from "../../components/invoices/components/invoiceListHeader";
-import Link from "next/link";
+
 
 const style = {
   container: `w-[90%] md:w-[80%] m-auto  mt-32`,
