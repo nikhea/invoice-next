@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { InvoiceProps } from "../../types";
 import { InvoiceData } from "../../data/invoiceData";
-import SenderDetails from "./components/SenderDetails";
-import ClientDetails from "./components/ClientDetails";
-import ItemsTable from "./components/ItemsTable";
-import ItemsHeader from "./components/ItemsHeader";
+import SenderDetails from "../../components/preview/components/SenderDetails";
+import ClientDetails from "../../components/preview/components/ClientDetails";
+import ItemsTable from "../../components/preview/components/ItemsTable";
+import ItemsHeader from "../../components/preview/components/ItemsHeader";
 import ReactToPrint from "react-to-print";
 import { useReactToPrint } from "react-to-print";
 const style = {

@@ -2,9 +2,9 @@ import { FC, useState } from "react";
 
 import "rc-dropdown/assets/index.css";
 import { InvoiceProps } from "../../types";
-import InvoiceListItem from "./components/InvoiceListItem";
+import InvoiceListItem from "../../components/invoices/components/InvoiceListItem";
 import { InvoiceData } from "../../data/invoiceData";
-import InvoiceListHeader from "./components/invoiceListHeader";
+import InvoiceListHeader from "../../components/invoices/components/invoiceListHeader";
 import Link from "next/link";
 
 const style = {
