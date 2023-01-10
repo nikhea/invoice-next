@@ -3,7 +3,6 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import BgImage from "../public/images/bg.jpg";
-import dbConnect from "../lib/database/dbConnect";
 import Invoice from "../models/invoiceSchema";
 
 const style = {
@@ -63,23 +62,4 @@ const Home = () => {
 };
 
 export default Home;
-// export async function getServerSideProps() {
-// console.log(currencyToSymbolMap)
-// let object = currencyToSymbolMap
-// for (const currencyCode in object) {
-//   if (object.hasOwnProperty(currencyCode)) {
-//     const currencySymbol = object[currencyCode];
-//     console.log(`${currencyCode}: ${currencySymbol}`);
-//   }
-// }
-// await dbConnect();
-/* find all the data in our database */
-// const result = await Invoice.find({});
-// const invoice = result.map((doc) => {
-//   const invoice = doc.toObject();
-//   invoice._id = invoice._id.toString();
-//   return invoice;
-// });
 
-// return { props: { invoice } };
-// }

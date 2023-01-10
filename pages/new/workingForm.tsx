@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -93,7 +94,9 @@ const mainForm = () => {
     console.log(index, "handleItemChange");
 
     // Get the price and quantity values
+    //@ts-ignore
     const price = getValues(`items[${index}].price`);
+     //@ts-ignore
     const quantity = getValues(`items[${index}].quantity`);
 
     // Calculate the total
