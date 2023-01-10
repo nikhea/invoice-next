@@ -20,7 +20,7 @@ import {
   formatItemTotal,
   formatToCurrency,
   calculateTotalAmount,
-} from "../../lib/formateNumbers";
+} from "../../../lib/formateNumbers";
 
 import es from "date-fns/locale/es";
 registerLocale("es", es);

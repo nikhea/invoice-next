@@ -1,5 +1,5 @@
 import React from "react";
-import FormInputs from "./workingForm";
+import FormInputs from "./components/workingForm";
 import Header from "./components/Header";
 const CreateInvoice = () => {
   const style = {
