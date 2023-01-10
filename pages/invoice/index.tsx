@@ -46,7 +46,7 @@ const Invoice: FC<InvoiceProps> = () => {
 };
 
 export default Invoice;
-export async function getServerSideProps() {
-  let invoiceData = InvoiceData;
-  return { props: { invoiceData } };
-}
+// export async function getServerSideProps() {
+//   let invoiceData = InvoiceData;
+//   return { props: { invoiceData } };
+// }
