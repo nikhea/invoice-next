@@ -1,55 +1,20 @@
-import mongoose from "mongoose";
+import * as dotenv from "dotenv";
+dotenv.config();
+import * as mongoose from "mongoose";
 
-const MONGODB_URI: string | undefined = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
-interface IMongoose {
-  conn: mongoose.Connection;
-  promise: Promise<mongoose.Connection>;
-}
-
-declare global {
-  const mongoose: IMongoose;
-}
-
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections growing exponentially
- * during API Route usage.
- */
-let cached: IMongoose = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: any, promise: any };
-}
-
-async function dbConnect(): Promise<mongoose.Connection> {
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URI as any, opts).then((mongoose) => {
-      return mongoose;
-    });
-  }
-
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
-  }
-
-  return cached.conn;
-}
-
-export default dbConnect;
+let dev_db_url = process.env.MONGODB_URI_LOCAL;
+// const mongoDB = dev_db_url || process.env.MONGODB_URI;
+// const mongoDB = process.env.MONGODB_URI;
+const connectionParams = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+mongoose
+  .connect(dev_db_url , connectionParams)
+  .then(() => {
+    console.log("Connected to database ");
+  })
+  .catch((err) => {
+    console.error(`Error connecting to the database. \n${err}`);
+  });
+export const db = mongoose.connection;
