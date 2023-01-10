@@ -12,8 +12,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useFormPersist from "react-hook-form-persist";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import moment from "moment";
-import { FormData } from "./FormData";
-import { invoiceSchema } from "./invoiceFormSchema";
+import { FormData } from "../../../lib/FormData";
+import { invoiceSchema } from "../../../lib/invoiceFormSchema";
 import { MdDeleteForever } from "react-icons/md";
 import { AiFillPlusCircle } from "react-icons/ai";
 import {
