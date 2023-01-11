@@ -11,7 +11,7 @@ const style = {
   textContainer: `p-5  lg:w-[75%] text-center md:text-left`,
   title: `text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] font-[700]   leading-[1.3] text-white`,
   subtitle: `  my-4 text-[1rem] md:text-[1.2rem] lg:text-[1.5rem] font-[400]   leading-[1.8] mb-20 text-white`,
-  button: `border uppercase text-white border-2 border-solid border-[#2B2B2B] bg-[#2B2B2B] font-[600] rounded-[10rem] sm:py-5 sm:px-5 md:py-5 md:px-10 my-10`,
+  button: `border uppercase text-white border-2 border-solid border-[#2B2B2B] bg-[#2B2B2B] font-[600] rounded-[10rem] px-10 py-3 my-10`,
   imgContainer: ` w-[50%] rounded-[25px] hidden md:block`,
   img: `w-full rounded-[25px] object-cover`,
 };
