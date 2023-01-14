@@ -1,6 +1,6 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { InvoiceData } from "../../../data/invoiceData";
+// import { InvoiceData } from "../../../data/invoiceData";
 import SenderDetails from "../../../components/singleInvoice/components/SenderDetails";
 import ClientDetails from "../../../components/singleInvoice/components/ClientDetails";
 import ItemsTable from "../../../components/singleInvoice/components/ItemsTable";
@@ -16,21 +16,23 @@ const style = {
 };
 
 const invoiceSingle = () => {
+  const [invoiceSingle, setInvoiceSingle] = useState();
   const router = useRouter();
   const { id: invoiceID } = router.query;
   const [invoiceList] = useLocalStorage();
 
-  // let invoice = invoiceList
   useEffect(() => {
-    let p = getSingleInvoices(invoiceID, invoiceList);
-    console.log(p, "single");
-  }, []);
-  const invoiceSingle = InvoiceData[0];
+    if (!invoiceID) return;
+    let InvoiceData = getSingleInvoices(invoiceID, invoiceList);
+    setInvoiceSingle(InvoiceData);
+  }, [invoiceID]);
+
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
+  if (!invoiceSingle) return;
   return (
     <div className={style.spacingTop}>
       <ItemsHeader handlePrint={handlePrint} invoiceID={invoiceID} />
@@ -39,7 +41,7 @@ const invoiceSingle = () => {
         <SenderDetails invoiceSingle={invoiceSingle} />
 
         <ClientDetails invoiceSingle={invoiceSingle} />
-
+        {/* @ts-ignore */}
         <ItemsTable invoiceItems={invoiceSingle.items} />
       </div>
     </div>

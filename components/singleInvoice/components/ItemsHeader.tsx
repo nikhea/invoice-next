@@ -24,12 +24,12 @@ const ItemsHeader: FC<senderProps> = ({ handlePrint, invoiceID }) => {
           print/download
         </button>
         <div>
-          <button
+          {/* <button
             className="bg-orange-500 py-3 px-3 capitalize text-white rounded-[10%] mr-10  "
             onClick={handlePrint}
           >
             edit
-          </button>
+          </button> */}
           <button
             className="bg-red-500 py-3 px-3 capitalize text-white rounded-[10%]"
             onClick={Ondelete}

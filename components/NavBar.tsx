@@ -18,14 +18,14 @@ const NavBar = () => {
               invoice
             </Link>
           </span>
-          <span className="hidden md:block">
+          {/* <span className="hidden md:block">
             <Link href="/" className={style.link}>
               sign up
             </Link>
             <Link href="/invoice" className={style.link}>
               log in
             </Link>
-          </span>
+          </span> */}
           <span className=" md:hidden">
             <Link href="/new" className={style.link}>
               create invoice

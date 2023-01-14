@@ -1,0 +1,51 @@
+.formContainer {
+  @apply w-[90%] lg:w-[80%] m-auto  shadow-md bg-white rounded-[10px] my-16 p-10;
+
+  label {
+    @apply w-[48%];
+    h1 {
+      @apply sm:mt-[20px] lg:text-[1em] ml-1 block capitalize tracking-widest font-normal;
+    }
+    .clientDetails {
+      @apply mt-[20px];
+    }
+  }
+  legend {
+    @apply mb-10 text-2xl uppercase font-light;
+  }
+  span {
+    @apply block md:flex items-center  justify-between;
+  }
+
+  select,
+  input,
+  textarea {
+    @apply my-[10px]  py-[15px] px-[23px]  
+   text-[.9375rem]   pr-[23px] outline-none  bg-[#f1f1f1] outline-none text-[#9a9a9a]
+   border border-[#C4C4C4] border-solid bg-white text-black  focus:outline-none focus:border-sky-500
+   rounded-[10px] w-full;
+    &[type="submit"] {
+      @apply bg-green-500 uppercase text-white text-base;
+    }
+    &[type="date"] {
+      @apply uppercase;
+    }
+  }
+  select > * {
+    @apply py-5 px-3;
+  }
+  option {
+  }
+  textarea {
+    @apply min-h-[20vh];
+  }
+  .addContainer {
+    @apply flex items-center justify-center gap-3;
+    & button {
+      @apply mt-5 text-red-500;
+    }
+  }
+  .createIcon {
+    @apply text-red-500 text-center flex items-center justify-center w-full;
+  }
+}

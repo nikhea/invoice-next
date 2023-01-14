@@ -1,4 +1,5 @@
 import { FC } from "react";
+import moment from "moment";
 interface clientProps {
   invoiceSingle: any;
 }
@@ -9,7 +10,7 @@ const style = {
   email: ` text-[18px] leading-[2.325rem] tracking-[1.23px]`,
   street: `  leading-[1.125rem] tracking-[-.23px]`,
   items: `mb-20 text-[18px] capitalize [&>*]:leading-[1.7rem]`,
-  itemInvoice:`mt-[95px] text-[18px] capitalize  tracking-[.75px] `,
+  itemInvoice: `mt-[95px] text-[18px] capitalize  tracking-[.75px] `,
   city: ``,
   postalCode: ``,
   country: ``,
@@ -36,8 +37,21 @@ const clientDetails: FC<clientProps> = ({ invoiceSingle }) => {
         </div>
       </div>
       <div className={style.itemInvoice}>
-        <p className="text-[15px]">invoice date : <span className="text-[#333b4d] bloc text-[18px]">{invoiceSingle.createdAt}</span></p>
-        <p className="text-[15px]">due date : <span className="text-[#333b4d] bloc text-[18px]">{invoiceSingle.paymentDue}</span></p>
+        <p className="text-[15px]">
+          invoice date :{" "}
+          <span className="text-[#333b4d] bloc text-[18px]">
+            {/* {invoiceSingle.createdAt} */}
+
+            {moment(invoiceSingle.createdAt).format("MM/DDD/yyyy")}
+          </span>
+        </p>
+        <p className="text-[15px]">
+          due date :{" "}
+          <span className="text-[#333b4d] bloc text-[18px]">
+            {/* {invoiceSingle.paymentDue} */}
+            {moment(invoiceSingle.paymentDue).format("MM/DD/yyyy")}
+          </span>
+        </p>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import "rc-dropdown/assets/index.css";
 import { InvoiceProps } from "../../types";
 import InvoiceListItem from "../../components/invoices/components/InvoiceListItem";
@@ -9,11 +9,13 @@ const style = {
   container: `w-[90%] md:w-[80%] m-auto  mt-32`,
 };
 const Invoice: FC<InvoiceProps> = () => {
-  const invoiceData = getInvoices();
+  const [invoiceData, setInvoiceDataState] = useState([]);
 
-  let invoiceDataLength = (invoiceData ?? []).length;
-  // let invoiceData: any = getInvoices();
-  const [invoiceDataState, setInvoiceDataState] = useState(invoiceData as any);
+  useEffect(() => {
+    let InvoiceData = getInvoices();
+    setInvoiceDataState(InvoiceData);
+  }, []);
+
   const filterStatus = (status: string) => {
     const result = invoiceData.filter((curData: { status: string }) => {
       return curData.status === status;
@@ -24,23 +26,21 @@ const Invoice: FC<InvoiceProps> = () => {
       setInvoiceDataState(result);
     }
   };
-  const invoiceDataDisplay = invoiceDataState.map(
-    (invoice: any, index: number) => (
-      <div key={index}>
-        <InvoiceListItem
-          id={invoice.id}
-          clientName={invoice.clientName}
-          status={invoice.status}
-          invoiceId={invoice.invoiceId}
-          paymentDue={invoice.paymentDue}
-        />
-      </div>
-    )
-  );
+  const invoiceDataDisplay = invoiceData.map((invoice: any, index: number) => (
+    <div key={index}>
+      <InvoiceListItem
+        id={invoice.id}
+        clientName={invoice.clientName}
+        status={invoice.status}
+        invoiceId={invoice.invoiceId}
+        paymentDue={invoice.paymentDue}
+      />
+    </div>
+  ));
   return (
     <div className={style.container}>
       <InvoiceListHeader
-        invoiceData={invoiceDataLength}
+        invoiceData={invoiceData}
         filterStatus={filterStatus}
         setInvoiceDataState={setInvoiceDataState}
       />
@@ -50,7 +50,3 @@ const Invoice: FC<InvoiceProps> = () => {
 };
 
 export default Invoice;
-// export async function getServerSideProps() {
-//   let invoiceData = InvoiceData;
-//   return { props: { invoiceData } };
-// }
