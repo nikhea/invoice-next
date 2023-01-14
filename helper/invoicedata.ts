@@ -15,7 +15,7 @@ export const saveInvoices = (data: InvoiceProps) => {
     localStorage.setItem("invoices", JSON.stringify(data) as any);
   }
 };
-export const getSingleInvoices = (invoiceID: string, invoiceList: any) => {
+export const getSingleInvoices = (invoiceID: any, invoiceList: any) => {
   const findInvoices = invoiceList.find((element: any, index: number) => {
     return element.invoiceId === invoiceID;
   });
