@@ -4,8 +4,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import "react-datepicker/dist/react-datepicker.css";
 import FormStyle from "./form.module.scss";
 import { FC } from "react";
-import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { useEffect } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,6 +22,8 @@ import {
 } from "../../../lib/formateNumbers";
 
 import es from "date-fns/locale/es";
+import useLocalStorage from "../../../hooks/useLocalStorage";
+
 registerLocale("es", es);
 function uniqueNumber(count: any) {
   let defaultNumber = 4413277523420;
@@ -38,12 +39,11 @@ function uniqueNumber(count: any) {
 }
 const options = ["draft", "pending", "paid"];
 const mainForm = () => {
-  const minDate = new Date();
-
-  const [startDate, setStartDate] = useState<any>(new Date());
+  const [invoiceList, setInvoiceList] = useLocalStorage();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
     getValues,
@@ -52,13 +52,15 @@ const mainForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(invoiceSchema),
   });
+  // console.log(errors);
+  // console.log(watch());
+
   useEffect(() => {
     let generateInvoiceNumber = uniqueNumber(5).toString();
-    console.log(generateInvoiceNumber);
-
+    setValue("paymentTerms", 33455);
     setValue("invoiceId", generateInvoiceNumber);
   }, []);
-  const { items, createdAt } = watch();
+  const { items } = watch();
 
   let priceInput: number | string | any, quantityInput: number | string | any;
   if (typeof items !== "undefined") {
@@ -90,11 +92,10 @@ const mainForm = () => {
   });
 
   const handleItemChange = (index: number) => {
-
     // Get the price and quantity values
     //@ts-ignore
     const price = getValues(`items[${index}].price`);
-     //@ts-ignore
+    //@ts-ignore
     const quantity = getValues(`items[${index}].quantity`);
 
     // Calculate the total
@@ -108,8 +109,6 @@ const mainForm = () => {
   useEffect(() => {
     const watchFields = () => {
       fields.forEach((item, index) => {
-        // console.log(items[index].quantity, index);
-
         watch(`items[${index}].quantity`, () => handleItemChange(index));
         watch(`items[${index}].price`, () => handleItemChange(index));
       });
@@ -120,18 +119,18 @@ const mainForm = () => {
     watchFields();
   }, [fields, priceInput, quantityInput]); // Only re-run the effect if the fields array changes
   function onSubmit(data: FormData) {
-    // console.log(data);
+    if (data) {
+      setInvoiceList([...invoiceList, data]);
+    }
+    reset();
+    let generateInvoiceNumber = uniqueNumber(5).toString();
+    setValue("paymentTerms", 33455);
+    setValue("invoiceId", generateInvoiceNumber);
   }
   function onItemAdd() {
-    {
-      /* @ts-ignore */
-    }
     append({ id: uuidv4() });
-    let createdAt = getValues("createdAt");
-    // let p = moment(createdAt, "MM-DD-YYYY", true).format("YYYY-MM-DD");
-    // console.log(createdAt, "data");
-    // setValue("createdAt", "12-1-2022");
   }
+
   function onItemDelete(index: number) {
     remove(index);
     let p: number | string | any = calculateTotalAmount(items);
@@ -394,7 +393,7 @@ const mainForm = () => {
           <br />
         </span>
 
-        <input type="submit" />
+        <input className="cursor-pointer" type="submit" />
       </form>
     </div>
   );

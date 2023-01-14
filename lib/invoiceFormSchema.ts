@@ -8,7 +8,7 @@ export const invoiceSchema = yup.object().shape({
     .required("Created at date is required"),
   paymentDue: yup.date().required("Payment due date is required"),
   description: yup.string().required("Description is required"),
-  paymentTerms: yup.number().required("Payment terms are required"),
+  // paymentTerms: yup.number().required("Payment terms are required"),
   senderName: yup.string().required("sender name is required"),
   senderEmail: yup
     .string()

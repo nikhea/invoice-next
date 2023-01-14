@@ -3,7 +3,6 @@ export const formatToCurrency = (amount: number): string => {
 };
 export const formatItemTotal = (price: number, quantity: number): string => {
   let total = price * quantity;
-  console.log(total, "formate");
 
   return formatToCurrency(total);
 };

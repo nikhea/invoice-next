@@ -3,7 +3,7 @@ export interface InvoiceProps {
   createdAt: string;
   paymentDue: string;
   description: string;
-  paymentTerms: number;
+  // paymentTerms: number;
   clientName: string;
   clientEmail: string;
   status: string;

@@ -28,8 +28,8 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
   setInvoiceDataState,
 }) => {
   const [drop, setDrop] = useState(false);
-  const isBigScreen = useMediaQuery({ query: "(min-width: 1224px)" });
-  const isSmallScreen = useMediaQuery({ query: "(min-width: 600px)" });
+ 
+
   function onSelect({ key }: any) {
     // console.log(`${key} selected`);
     if (key === "0") {
@@ -90,12 +90,6 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
         <h1 className={style.title}> Invoices</h1>
         <p className={style.subTitle}>
           There are {invoiceData.length} total invoices
-          {/* {isBigScreen ? (
-            <> There are {invoiceData.length} total invoices</>
-          ) : (
-            <> {invoiceData.length} Invoices</>
-          )} */}
-          {/* {isSmallScreen && <> {invoiceData.length} Invoices</> } */}
         </p>
       </div>
       <div className="flex items-center justify-between ">
@@ -115,7 +109,7 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
         </Dropdown>
         <Link href="/new">
           <button className={style.create}>
-            <AiFillPlusCircle  className={style.createIcon} /> new invoices
+            <AiFillPlusCircle className={style.createIcon} /> new invoices
           </button>
         </Link>
       </div>

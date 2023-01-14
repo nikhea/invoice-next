@@ -2,6 +2,7 @@ import { FC } from "react";
 // import { InvoiceProps } from "../../../types";
 import { BsDot } from "react-icons/bs";
 import Link from "next/link";
+import moment from "moment";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 const style = {
   Bgcontainer: `shadow-md bg-white bg-white  md:w-[80%] m-auto rounded my-20 px-6`,
@@ -21,8 +22,16 @@ interface InvoiceProps {
   id: string;
   status: string;
   clientName: string;
+  paymentDue: any;
+  invoiceId: string;
 }
-const InvoiceListItem: FC<InvoiceProps> = ({ id, status, clientName }) => {
+const InvoiceListItem: FC<InvoiceProps> = ({
+  id,
+  status,
+  clientName,
+  paymentDue,
+  invoiceId,
+}) => {
   const statusStyle = {
     backgroundColor:
       status === "paid"
@@ -44,13 +53,15 @@ const InvoiceListItem: FC<InvoiceProps> = ({ id, status, clientName }) => {
         : null,
   };
   return (
-    <Link href={`invoice/${id}`}>
+    <Link href={`invoice/${invoiceId}`}>
       <div className={style.Bgcontainer}>
         <div className={style.invoiceContainer}>
           <p className={style.id}>
-            # <span className={style.idNumber}>rt3038</span>
+            # <span className={style.idNumber}>{invoiceId}</span>
           </p>
-          <p className={style.date}>due 19 aug 2021</p>
+          <p className={style.date}>
+            due {moment(paymentDue).format("MM/DD/yyyy")}
+          </p>
           <h3 className={style.name}>{clientName}</h3>
           {/* <div className="flex items-center justify-between"> */}
           <p className={style.price}> $1,800.90</p>

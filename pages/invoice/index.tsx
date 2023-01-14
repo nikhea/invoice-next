@@ -1,18 +1,20 @@
-import { FC, useState } from "react";
-
+import { FC, useContext, useState } from "react";
+import { GlobalContext } from "../../context/globalState";
 import "rc-dropdown/assets/index.css";
 import { InvoiceProps } from "../../types";
 import InvoiceListItem from "../../components/invoices/components/InvoiceListItem";
-import { InvoiceData } from "../../data/invoiceData";
 import InvoiceListHeader from "../../components/invoices/components/invoiceListHeader";
-
+import { getInvoices } from "../../helper/invoicedata";
 
 const style = {
   container: `w-[90%] md:w-[80%] m-auto  mt-32`,
 };
 const Invoice: FC<InvoiceProps> = () => {
-  let invoiceData = InvoiceData;
-  const [invoiceDataState, setInvoiceDataState] = useState(invoiceData);
+  const invoiceData = getInvoices();
+
+  let invoiceDataLength = (invoiceData ?? []).length;
+  // let invoiceData: any = getInvoices();
+  const [invoiceDataState, setInvoiceDataState] = useState(invoiceData as any);
   const filterStatus = (status: string) => {
     const result = invoiceData.filter((curData: { status: string }) => {
       return curData.status === status;
@@ -22,21 +24,24 @@ const Invoice: FC<InvoiceProps> = () => {
     } else {
       setInvoiceDataState(result);
     }
-    // console.log(status);
   };
-  const invoiceDataDisplay = invoiceDataState.map((invoice) => (
-    <div key={invoice.id}>
-      <InvoiceListItem
-        id={invoice.id}
-        clientName={invoice.clientName}
-        status={invoice.status}
-      />
-    </div>
-  ));
+  const invoiceDataDisplay = invoiceDataState.map(
+    (invoice: any, index: number) => (
+      <div key={index}>
+        <InvoiceListItem
+          id={invoice.id}
+          clientName={invoice.clientName}
+          status={invoice.status}
+          invoiceId={invoice.invoiceId}
+          paymentDue={invoice.paymentDue}
+        />
+      </div>
+    )
+  );
   return (
     <div className={style.container}>
       <InvoiceListHeader
-        invoiceData={invoiceData}
+        invoiceData={invoiceDataLength}
         filterStatus={filterStatus}
         setInvoiceDataState={setInvoiceDataState}
       />
