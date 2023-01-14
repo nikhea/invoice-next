@@ -35,5 +35,4 @@ export const deleteInvoices = (
   });
   setInvoiceList(filterinvoices);
   getInvoices();
-  s;
 };
