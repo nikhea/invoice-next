@@ -1,6 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import { InvoiceProps } from "../../types";
-import { InvoiceData } from "../../data/invoiceData";
 import SenderDetails from "../../components/preview/components/SenderDetails";
 import ClientDetails from "../../components/preview/components/ClientDetails";
 import ItemsTable from "../../components/preview/components/ItemsTable";
@@ -12,7 +10,6 @@ const style = {
 };
 
 const invoiceSingle = () => {
-  // let invoiceSingle = InvoiceData[0];
   const [invoiceSingle, setInvoiceSingle] = useState<any>();
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
@@ -29,8 +26,6 @@ const invoiceSingle = () => {
   }, []);
 
   if (!invoiceSingle) return;
-
-
 
   return (
     <div className={style.spacingTop}>

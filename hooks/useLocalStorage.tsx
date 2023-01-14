@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  getInvoices,
-  saveInvoices,
-  deleteInvoices,
-} from "../helper/invoicedata";
+import { getInvoices, saveInvoices } from "../helper/invoicedata";
 
 export default function useLocalStorage() {
   const [value, setValue] = useState(getInvoices());
@@ -18,7 +14,6 @@ export default function useLocalStorage() {
       return element.invoiceId !== invoiceID;
     });
     setValue(filterinvoices);
-    // getInvoices();
   };
 
   return [value, setValue];

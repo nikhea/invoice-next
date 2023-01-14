@@ -1,5 +1,4 @@
 import { FC, useContext, useState } from "react";
-import { GlobalContext } from "../../context/globalState";
 import "rc-dropdown/assets/index.css";
 import { InvoiceProps } from "../../types";
 import InvoiceListItem from "../../components/invoices/components/InvoiceListItem";
