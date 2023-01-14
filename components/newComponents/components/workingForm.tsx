@@ -386,6 +386,7 @@ const mainForm = () => {
               {...register(`total`)}
               placeholder="Total Amount"
               disabled
+              defaultValue={0}
               className={FormStyle.disabled}
             />
             {errors.total && <span>{errors.total.message}</span>}
