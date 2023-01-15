@@ -14,8 +14,9 @@ import {
   calculateTotalAmount,
 } from "../../../lib/formateNumbers";
 import { generateRandomNumber } from "../../../lib/generateInvoiceNumber";
-
 import useLocalStorage from "../../../hooks/useLocalStorage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const options = ["draft", "pending", "paid"];
 const mainForm = () => {
@@ -95,6 +96,17 @@ const mainForm = () => {
   function onSubmit(data: FormData) {
     if (data) {
       setInvoiceList([...invoiceList, data]);
+      toast.success("🦄 invoice created", {
+        marginTop: 6000,
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
     reset();
     let generateInvoiceNumber = generateRandomNumber();
@@ -364,6 +376,7 @@ const mainForm = () => {
 
         <input className="cursor-pointer" type="submit" />
       </form>
+      <ToastContainer />
     </div>
   );
 };
