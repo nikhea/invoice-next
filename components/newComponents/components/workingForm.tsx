@@ -1,42 +1,22 @@
 //@ts-nocheck
-import React, { useState } from "react";
-import "react-datepicker/dist/react-datepicker-cssmodules.css";
-import "react-datepicker/dist/react-datepicker.css";
+import { FC, useEffect } from "react";
 import FormStyle from "./form.module.scss";
-import { FC } from "react";
-import { useEffect } from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useFormPersist from "react-hook-form-persist";
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
-import moment from "moment";
 import { FormData } from "../../../lib/FormData";
 import { invoiceSchema } from "../../../lib/invoiceFormSchema";
 import { MdDeleteForever } from "react-icons/md";
 import { AiFillPlusCircle } from "react-icons/ai";
 import {
   formatItemTotal,
-  formatToCurrency,
   calculateTotalAmount,
 } from "../../../lib/formateNumbers";
+import { generateRandomNumber } from "../../../lib/generateInvoiceNumber";
 
-import es from "date-fns/locale/es";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 
-registerLocale("es", es);
-function uniqueNumber(count: any) {
-  let defaultNumber = 4413277523420;
-  let convertToArray = defaultNumber.toString().split("");
-  let sliceNumber = convertToArray.slice(0, count);
-  let randomNumber = Math.floor(Math.random() * +sliceNumber.join(""));
-
-  if (randomNumber.toString().split("").length < count) {
-    randomNumber = Math.abs(randomNumber - +sliceNumber.join(""));
-  }
-
-  return randomNumber;
-}
 const options = ["draft", "pending", "paid"];
 const mainForm = () => {
   const [invoiceList, setInvoiceList] = useLocalStorage();
@@ -52,11 +32,8 @@ const mainForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(invoiceSchema),
   });
-  // console.log(errors);
-  // console.log(watch());
-
   useEffect(() => {
-    let generateInvoiceNumber = uniqueNumber(5).toString();
+    let generateInvoiceNumber = generateRandomNumber();
     setValue("paymentTerms", 33455);
     setValue("invoiceId", generateInvoiceNumber);
   }, []);
@@ -93,14 +70,13 @@ const mainForm = () => {
 
   const handleItemChange = (index: number) => {
     // Get the price and quantity values
-    //@ts-ignore
+
     const price = getValues(`items[${index}].price`);
-    //@ts-ignore
+
     const quantity = getValues(`items[${index}].quantity`);
 
     // Calculate the total
     const total = formatItemTotal(price, quantity);
-    // console.log(total, "sdjshhakhja;as");
 
     // Set the total value
     setValue(`items[${index}].total`, total);
@@ -113,8 +89,6 @@ const mainForm = () => {
         watch(`items[${index}].price`, () => handleItemChange(index));
       });
     };
-    // let p = watchFields();
-    // console.log(p);
 
     watchFields();
   }, [fields, priceInput, quantityInput]); // Only re-run the effect if the fields array changes
@@ -123,7 +97,7 @@ const mainForm = () => {
       setInvoiceList([...invoiceList, data]);
     }
     reset();
-    let generateInvoiceNumber = uniqueNumber(5).toString();
+    let generateInvoiceNumber = generateRandomNumber();
     setValue("paymentTerms", 33455);
     setValue("invoiceId", generateInvoiceNumber);
   }
@@ -153,8 +127,6 @@ const mainForm = () => {
           <br />
           <label>
             <h1> Status </h1>
-            {/* <input {...register("status")} /> */}
-
             <select className={FormStyle.select} {...register("status")}>
               {options.map((option) => (
                 <option value={option} key={option}>
@@ -290,9 +262,9 @@ const mainForm = () => {
             <label>
               <h1> Street</h1>
               <input {...register("clientAddress.street")} />
-              {/* {errors.clientAddress && erroexport default InvoiceFormrs.clientAddress.street && (
-          <span>{errors.clientAddress.street.message}</span>
-        )} */}
+              {errors.clientAddress && errors.clientAddress.street && (
+                <span>{errors.clientAddress.street.message}</span>
+              )}
             </label>
             <br />
             <label>
@@ -340,19 +312,16 @@ const mainForm = () => {
             <br />
             <label>
               Quantity
-              {/* @ts-ignore */}
               <input type="number" {...register(`items[${index}].quantity`)} />
             </label>
             <br />
             <label>
               Price
-              {/* @ts-ignore */}
               <input type="number" {...register(`items[${index}].price`)} />
             </label>
             <br />
             <label>
               Total
-              {/* @ts-ignore */}
               {/* { parseInt(items[${index}].quantity  * items[${index}].price)} */}
               <input
                 type="number"
@@ -369,7 +338,6 @@ const mainForm = () => {
         ))}
         <br />
         <span>
-          {" "}
           <button
             className={FormStyle.createIcon}
             type="button"

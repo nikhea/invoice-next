@@ -1,9 +1,8 @@
 import { FC, useState, useEffect } from "react";
 import Link from "next/link";
 import Dropdown from "rc-dropdown";
-import Menu, { Item as MenuItem, Divider } from "rc-menu";
+import Menu, { Item as MenuItem } from "rc-menu";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { useMediaQuery } from "react-responsive";
 import {
   MdOutlineKeyboardArrowUp,
   MdOutlineKeyboardArrowDown,
@@ -28,12 +27,11 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
   setInvoiceDataState,
 }) => {
   const [drop, setDrop] = useState(false);
- 
 
   function onSelect({ key }: any) {
     // console.log(`${key} selected`);
     if (key === "0") {
-      // filterStatus("paid");
+      filterStatus("all");
       // setInvoiceDataState(invoiceData);
     } else if (key === "1") {
       filterStatus("paid");
@@ -59,6 +57,12 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
       onSelect={onSelect}
       className="min-w-[200px] mx-auto  flex flex-col capitalize"
     >
+      {/* <MenuItem key="0" className="flex items-center w-full justify-cente ">
+        <p className="mx-3 text-[1rem] mt-4">
+          <input type="checkbox" />
+          all
+        </p>
+      </MenuItem> */}
       <MenuItem key="0" className="flex items-center w-full justify-cente ">
         <p className="mx-3 text-[1rem] mt-4">
           <input type="checkbox" /> all
@@ -89,7 +93,9 @@ const invoiceListHeader: FC<invoiceHeaderProps> = ({
       <div>
         <h1 className={style.title}> Invoices</h1>
         <p className={style.subTitle}>
-          There are {invoiceData.length} total invoices
+          {invoiceData.length > 0
+            ? ` There are ${invoiceData.length} total invoices `
+            : ` You currently have no invoice`}
         </p>
       </div>
       <div className="flex items-center justify-between ">
