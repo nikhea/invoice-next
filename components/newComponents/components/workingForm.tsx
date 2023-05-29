@@ -1,26 +1,34 @@
 //@ts-nocheck
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 import FormStyle from "./form.module.scss";
 import { useForm, useFieldArray } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useFormPersist from "react-hook-form-persist";
-import { FormData } from "../../../lib/FormData";
 import { invoiceSchema } from "../../../lib/invoiceFormSchema";
 import { MdDeleteForever } from "react-icons/md";
 import { AiFillPlusCircle } from "react-icons/ai";
-import {
-  formatItemTotal,
-  calculateTotalAmount,
-} from "../../../lib/formateNumbers";
 import { generateRandomNumber } from "../../../lib/generateInvoiceNumber";
-import useLocalStorage from "../../../hooks/useLocalStorage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  invoiceFormData,
+  useInvoiceState,
+} from "../../../store/useInvoiceStore";
+import {
+  calculateTotalAmount,
+  formatItemTotal,
+} from "../../../lib/formateNumbers";
+import { useItemsStore } from "../../../store/useItemsState";
 
 const options = ["draft", "pending", "paid"];
 const mainForm = () => {
-  const [invoiceList, setInvoiceList] = useLocalStorage();
+  const { setInvoiceList } = useInvoiceState();
+  const [itemState, setItemState] = useState([]);
+  useEffect(() => {
+    setValue("paymentTerms", 33455);
+    setValue("invoiceId", generateRandomNumber());
+  }, []);
   const {
     register,
     handleSubmit,
@@ -30,31 +38,9 @@ const mainForm = () => {
     getValues,
     setValue,
     control,
-  } = useForm<FormData>({
+  } = useForm<invoiceFormData>({
     resolver: yupResolver(invoiceSchema),
   });
-  useEffect(() => {
-    let generateInvoiceNumber = generateRandomNumber();
-    setValue("paymentTerms", 33455);
-    setValue("invoiceId", generateInvoiceNumber);
-  }, []);
-  const { items } = watch();
-
-  let priceInput: number | string | any, quantityInput: number | string | any;
-  if (typeof items !== "undefined") {
-    for (let item of items) {
-      let { price, quantity } = item;
-      if (price !== undefined || quantity !== undefined) {
-        priceInput = parseInt(price);
-        quantityInput = parseInt(quantity);
-      }
-    }
-  }
-  useEffect(() => {
-    let p: number | string | any = calculateTotalAmount(items);
-
-    setValue("total", parseInt(p as any));
-  }, [priceInput, quantityInput]);
 
   if (typeof window !== "undefined") {
     useFormPersist("storageInvoiceData", {
@@ -68,36 +54,55 @@ const mainForm = () => {
     control,
     name: "items",
   });
+  function onItemAdd() {
+    append({ id: uuidv4() });
+    // const newItem = { quantity: "", price: "" };
+    // setItemState([...itemState, newItem]);
+  }
 
-  const handleItemChange = (index: number) => {
-    // Get the price and quantity values
+  function onItemDelete(index: number) {
+    remove(index);
+  }
+  const items = watch("items") || [];
 
-    const price = getValues(`items[${index}].price`);
-
-    const quantity = getValues(`items[${index}].quantity`);
-
-    // Calculate the total
-    const total = formatItemTotal(price, quantity);
-
-    // Set the total value
-    setValue(`items[${index}].total`, total);
-  };
-  // Watch the quantity and price fields
   useEffect(() => {
-    const watchFields = () => {
-      fields.forEach((item, index) => {
-        watch(`items[${index}].quantity`, () => handleItemChange(index));
-        watch(`items[${index}].price`, () => handleItemChange(index));
-      });
+    const calculateTotalAmount = () => {
+      let total = 0;
+      for (const item of items) {
+        const quantity = Number(item.quantity);
+        const price = Number(item.price);
+        if (quantity && price) {
+          total += quantity * price;
+        }
+      }
+      return total;
     };
 
-    watchFields();
-  }, [fields, priceInput, quantityInput]); // Only re-run the effect if the fields array changes
-  function onSubmit(data: FormData) {
+    const total = calculateTotalAmount();
+    setValue("allTotal", total);
+  }, [itemState]);
+
+  const handleItemChange = (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+    setItemState(updatedItems);
+    const price = getValues(`items[${index}].price`);
+    const quantity = getValues(`items[${index}].quantity`);
+    const total = formatItemTotal(price, quantity);
+    setValue(`items[${index}].total`, total, { shouldValidate: true });
+  };
+
+  useEffect(() => {
+    if (items) {
+      setItemState(items);
+    }
+  }, [items]);
+
+  function onSubmit(data: invoiceFormData) {
+    console.log(data);
     if (data) {
-      setInvoiceList([...invoiceList, data]);
+      setInvoiceList(data);
       toast.success("🦄 invoice created", {
-        marginTop: 6000,
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -109,19 +114,11 @@ const mainForm = () => {
       });
     }
     reset();
-    let generateInvoiceNumber = generateRandomNumber();
+    setValue("items", []);
     setValue("paymentTerms", 33455);
-    setValue("invoiceId", generateInvoiceNumber);
-  }
-  function onItemAdd() {
-    append({ id: uuidv4() });
+    setValue("invoiceId", generateRandomNumber());
   }
 
-  function onItemDelete(index: number) {
-    remove(index);
-    let p: number | string | any = calculateTotalAmount(items);
-    setValue("total", parseInt(p as any));
-  }
   return (
     <div>
       <form
@@ -129,7 +126,6 @@ const mainForm = () => {
         className={FormStyle.formContainer}
       >
         <span>
-          {" "}
           <label>
             <h1>Invoice Number</h1>
 
@@ -157,20 +153,6 @@ const mainForm = () => {
           <label>
             <h1> Created At</h1>
             <input type="date" {...register("createdAt")} />
-            {/* <Controller
-              control={control}
-              name="createdAt"
-              render={({ field }) => (
-                <DatePicker
-                  minDate={new Date()}
-                  placeholderText="MM/DD/YYYY"
-                  dateFormat="MM/dd/yyyy"
-                  selected={new Date(field.value)}
-                  onChange={(date) => setValue("createdAt", date)}
-            
-                /> */}
-            {/* )} */}
-            {/* /> */}
             {errors.createdAt && <span>{errors.createdAt.message}</span>}
           </label>
           <br />
@@ -181,19 +163,6 @@ const mainForm = () => {
               {...register("paymentDue")}
               placeholder="DD/MM/YYYY"
             />
-            {/* <Controller
-              control={control}
-              name="paymentDue"
-              render={({ field }) => (
-                <DatePicker
-                  locale="es"
-                  dateFormat="yyyy-MM-dd"
-                  placeholderText="Select date"
-                  onChange={(date) => field.onChange(date)}
-                  selected={field.value}
-                />
-              )}
-            /> */}
           </label>
         </span>
         <br />
@@ -317,29 +286,48 @@ const mainForm = () => {
         {fields.map((item, index) => (
           <div key={item.id} className={FormStyle.addContainer}>
             <label>
-              Name
-              {/* @ts-ignore */}
-              <input type="text" {...register(`items[${index}].name`)} />
+              Description
+              <input
+                type="text"
+                {...register(`items[${index}].name`)}
+                defaultValue={item.name}
+              />
             </label>
             <br />
             <label>
               Quantity
-              <input type="number" {...register(`items[${index}].quantity`)} />
+              <input
+                type="number"
+                name={`items[${index}].quantity`}
+                onChange={(e) =>
+                  handleItemChange(index, "quantity", e.target.value)
+                }
+                // {...register(`items[${index}].quantity`)}
+                defaultValue={item.quantity}
+              />
             </label>
             <br />
             <label>
               Price
-              <input type="number" {...register(`items[${index}].price`)} />
+              <input
+                type="number"
+                name={`items[${index}].price`}
+                // {...register(`items[${index}].price`)}
+                onChange={(e) =>
+                  handleItemChange(index, "price", e.target.value)
+                }
+                defaultValue={item.price}
+              />
             </label>
             <br />
             <label>
               Total
-              {/* { parseInt(items[${index}].quantity  * items[${index}].price)} */}
               <input
                 type="number"
                 {...register(`items[${index}].total`)}
                 disabled
                 className={FormStyle.disabled}
+                defaultValue={0}
               />
             </label>
             <br />
@@ -363,13 +351,13 @@ const mainForm = () => {
             <h1>total</h1>
             <input
               type="number"
-              {...register(`total`)}
+              {...register(`allTotal`)}
               placeholder="Total Amount"
               disabled
-              defaultValue={0}
+              // defaultValue={0}
               className={FormStyle.disabled}
             />
-            {errors.total && <span>{errors.total.message}</span>}
+            {errors.allTotal && <span>{errors?.allTotal?.message}</span>}
           </label>
           <br />
         </span>
@@ -382,3 +370,100 @@ const mainForm = () => {
 };
 
 export default mainForm;
+// {fields.map((item, index) => (
+//   <div key={item.id} className={FormStyle.addContainer}>
+//     <label>
+//       Name
+//       <input type="text" {...register(`items[${index}].name`)} />
+//     </label>
+//     <br />
+//     <label>
+//       Quantity
+//       <input type="number" {...register(`items[${index}].quantity`)} />
+//     </label>
+//     <br />
+//     <label>
+//       Price
+//       <input type="number" {...register(`items[${index}].price`)} />
+//     </label>
+//     <br />
+//     <label>
+//       Total
+//       { parseInt(items[${index}].quantity  * items[${index}].price)}
+//       <input
+//         type="number"
+//         {...register(`items[${index}].total`)}
+//         disabled
+//         className={FormStyle.disabled}
+//       />
+//     </label>
+//     <br />
+//     <button type="button" onClick={() => onItemDelete(index)}>
+//       <MdDeleteForever size={30} />
+//     </button>
+//   </div>
+// ))}
+
+// const { items } = watch();
+
+// let priceInput: number, quantityInput: number;
+// if (typeof items !== "undefined") {
+//   for (let item of items) {
+//     let { price, quantity } = item;
+//     if (price !== undefined || quantity !== undefined) {
+//       priceInput = parseInt(price);
+//       quantityInput = parseInt(quantity);
+//     }
+//   }
+// }
+// useEffect(() => {
+//   let total: number = calculateTotalAmount(items);
+
+//   setValue("total", total);
+// }, [priceInput, quantityInput]);
+
+// const handleItemChange = (index: number) => {
+//   const price = getValues(`items[${index}].price`);
+//   const quantity = getValues(`items[${index}].quantity`);
+//   const total = formatItemTotal(price, quantity);
+//   setValue(`items[${index}].total`, total);
+// };
+// useEffect(() => {
+//   const watchFields = () => {
+//     fields.forEach((item, index) => {
+//       watch(`items[${index}].quantity`, () => handleItemChange(index));
+//       watch(`items[${index}].price`, () => handleItemChange(index));
+//     });
+//   };
+
+//   watchFields();
+// }, [fields, priceInput, quantityInput, setValue, watch]);
+// useEffect(() => {
+//   const calculateTotalAmount = () => {
+//     let total = 0;
+//     for (const item of items) {
+//       const quantity = Number(item.quantity);
+//       const price = Number(item.price);
+//       total += quantity * price;
+//     }
+//     return total;
+//   };
+
+//   const total = calculateTotalAmount();
+//   setValue("allTotal", total);
+// }, [items.map((item) => `${item.quantity}-${item.price}`).join(",")]);
+// const handleItemChange = (index: number) => {
+//   const price = getValues(`items[${index}].price`);
+//   const quantity = getValues(`items[${index}].quantity`);
+//   const total = formatItemTotal(price, quantity);
+//   setValue(`items[${index}].total`, total, { shouldValidate: true });
+// };
+// useEffect(() => {
+//   const watchFields = () => {
+//     fields.forEach((item, index) => {
+//       watch(`items[${index}].quantity`, () => handleItemChange(index));
+//       watch(`items[${index}].price`, () => handleItemChange(index));
+//     });
+//   };
+//   watchFields();
+// }, [setValue, watch, ]);

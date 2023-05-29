@@ -1,5 +1,7 @@
-export const formatToCurrency = (amount: number): string => {
-  return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+export const formatToCurrency = (amount: any): any => {
+  return parseInt(amount)
+    .toFixed(2)
+    .replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };
 export const formatItemTotal = (price: number, quantity: number): string => {
   let total = price * quantity;
@@ -19,7 +21,8 @@ export function calculateTotalAmount(
       totalAmount += item.price * item.quantity;
     }
   }
-  return parseInt(totalAmount as any);
+  let amount = formatToCurrency(totalAmount);
+  return amount;
 }
 
 // const items = [

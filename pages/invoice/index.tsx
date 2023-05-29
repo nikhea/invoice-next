@@ -3,29 +3,27 @@ import "rc-dropdown/assets/index.css";
 import { InvoiceProps } from "../../types";
 import InvoiceListItem from "../../components/invoices/components/InvoiceListItem";
 import InvoiceListHeader from "../../components/invoices/components/invoiceListHeader";
-import { getInvoices } from "../../helper/invoicedata";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import { invoiceFormData, useInvoiceState } from "../../store/useInvoiceStore";
 
 const style = {
   container: `w-[90%] md:w-[80%] m-auto  mt-32`,
 };
 const Invoice: FC<InvoiceProps> = () => {
-  const [invoiceList] = useLocalStorage();
-  const [invoiceData, setInvoiceDataState] = useState([]);
+  // const [invoiceList] = useLocalStorage();
+  const { invoices } = useInvoiceState();
+  const [invoiceData, setInvoiceDataState] = useState<invoiceFormData[]>([]);
 
   useEffect(() => {
-    setInvoiceDataState(invoiceList);
-  }, [invoiceList]);
-  // console.log(invoiceData, "incoice data");
+    setInvoiceDataState(invoices);
+  }, [invoices]);
 
   const filterStatus = (status: string) => {
-    console.log(status);
-    if ("all" === status) {
-      setInvoiceDataState(invoiceList);
+    if ("all" === status || !status) {
+      setInvoiceDataState(invoices);
     } else if (!status) {
-      setInvoiceDataState(invoiceList);
+      setInvoiceDataState(invoices);
     } else {
-      const result = invoiceList.filter((curData: { status: string }) => {
+      const result = invoices.filter((curData: { status: string }) => {
         return curData.status === status;
       });
       setInvoiceDataState(result);

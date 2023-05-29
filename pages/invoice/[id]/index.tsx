@@ -10,6 +10,7 @@ import { useReactToPrint } from "react-to-print";
 import { invoiceSchema } from "../../../lib/invoiceFormSchema";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { getSingleInvoices } from "../../../helper/invoicedata";
+import { useInvoiceState } from "../../../store/useInvoiceStore";
 const style = {
   container: `w-[80%]  m-auto my-16 bg-white shadow-sm p-10 flex flex-col rounded-[20px]`,
   spacingTop: `mt-32`,
@@ -19,11 +20,12 @@ const invoiceSingle = () => {
   const [invoiceSingle, setInvoiceSingle] = useState();
   const router = useRouter();
   const { id: invoiceID } = router.query;
-  const [invoiceList] = useLocalStorage();
+  // const [invoiceList] = useLocalStorage();
+  const { getInvoice } = useInvoiceState();
 
   useEffect(() => {
     if (!invoiceID) return;
-    let InvoiceData = getSingleInvoices(invoiceID, invoiceList);
+    let InvoiceData = getInvoice(invoiceID);
     setInvoiceSingle(InvoiceData);
   }, [invoiceID]);
 

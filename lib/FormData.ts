@@ -22,11 +22,10 @@ export interface FormData {
     country: string;
   };
   items: {
-    // id:string;
     name: string;
     quantity: number | string | any;
     price: number | string | any;
     total: number | string | any;
   }[];
-  total: number | string | any;
+  allTotal: number | string | any;
 }

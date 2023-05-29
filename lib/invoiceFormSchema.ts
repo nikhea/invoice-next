@@ -46,6 +46,7 @@ export const invoiceSchema = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
+        id: yup.string().required(),
         name: yup.string().required("Item name is required"),
         quantity: yup.number().required("Item quantity is required"),
         price: yup.number().required("Item price is required"),
@@ -53,5 +54,6 @@ export const invoiceSchema = yup.object().shape({
       })
     )
     .required("At least one item is required"),
-  total: yup.number().required("Total is required"),
+  allTotal: yup.number().required("Total is required"),
 });
+// .required("Item total is required")

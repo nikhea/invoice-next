@@ -8,7 +8,7 @@ import {
   MdOutlineKeyboardArrowDown,
 } from "react-icons/md";
 const style = {
-  innerContainer: `md:w-[80%] m-auto flex justify-between items-center`,
+  innerContainer: `md:w-[80%] m-auto flex justify-between items-center mb-20`,
   title: `font-[700] text-[1.3rem] md:text-[2rem] capitalize leading-[.9375rem] tracking-[-.25px] mb-4`,
   subTitle: `text-[888EB0] text-[.9rem] leading-[.9375rem] tracking-[-.25px]`,
   create: `hidden  text-white bg-[#7c5dfa] rounded-full capitalize py-2 pr-5 md:flex justify-betwee items-center [&>*]:mx-2 `,

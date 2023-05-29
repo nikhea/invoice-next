@@ -12,7 +12,8 @@ const style = {
 const ItemsHeader: FC<senderProps> = ({ handlePrint }) => {
   return (
     <div className="w-[90%] md:w-[80%]  m-auto ">
-      <div className="shadow-md bg-white  py-5 rounded my-1 flex items-center justify-between px-10 md:px-20">
+      {/* shadow-md bg-white */}
+      <div className="flex items-center justify-between px-10 py-5 my-1 rounded md:px-20">
         <Link href="/new" className="arrow">
           <MdOutlineKeyboardArrowLeft className={style.arrow} />
           {/* <button className="bg-blue-500 py-3 px-3 capitalize text-white rounded-[10%]">
@@ -22,7 +23,7 @@ const ItemsHeader: FC<senderProps> = ({ handlePrint }) => {
 
         <div>
           <button
-            className="bg-green-500 py-3 px-3 capitalize text-white rounded"
+            className="px-3 py-3 text-white capitalize bg-green-500 rounded"
             onClick={handlePrint}
           >
             print/download

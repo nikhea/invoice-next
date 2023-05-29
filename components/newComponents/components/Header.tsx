@@ -9,7 +9,8 @@ const style = {
 const ItemsHeader: FC = () => {
   return (
     <div className="w-[90%] md:w-[80%]  m-auto ">
-      <div className="flex items-center justify-between px-10 py-5 my-1 bg-white rounded shadow-md md:px-20">
+      {/* bg-white rounded shadow-md */}
+      <div className="flex items-center justify-between px-10 py-5 my-1 md:px-20">
         <Link href="/invoice" className="arrow">
           <MdOutlineKeyboardArrowLeft className={style.arrow} />
           {/* <button className="bg-blue-500 py-3 px-3 capitalize text-white rounded-[10%]">
