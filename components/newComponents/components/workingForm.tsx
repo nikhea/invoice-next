@@ -66,19 +66,19 @@ const mainForm = () => {
   const items = watch("items") || [];
 
   useEffect(() => {
-    const calculateTotalAmount = () => {
-      let total = 0;
-      for (const item of items) {
-        const quantity = Number(item.quantity);
-        const price = Number(item.price);
-        if (quantity && price) {
-          total += quantity * price;
-        }
-      }
-      return total;
-    };
+    // const calculateTotalAmount = () => {
+    //   let total = 0;
+    //   for (const item of items) {
+    //     const quantity = Number(item.quantity);
+    //     const price = Number(item.price);
+    //     if (quantity && price) {
+    //       total += quantity * price;
+    //     }
+    //   }
+    //   return total;
+    // };
 
-    const total = calculateTotalAmount();
+    const total = calculateTotalAmount(items);
     setValue("allTotal", total);
   }, [itemState]);
 
@@ -89,7 +89,9 @@ const mainForm = () => {
     const price = getValues(`items[${index}].price`);
     const quantity = getValues(`items[${index}].quantity`);
     const total = formatItemTotal(price, quantity);
-    setValue(`items[${index}].total`, total, { shouldValidate: true });
+    if (price && quantity) {
+      setValue(`items[${index}].total`, total, { shouldValidate: true });
+    }
   };
 
   useEffect(() => {
@@ -113,8 +115,9 @@ const mainForm = () => {
         theme: "light",
       });
     }
-    reset();
+
     setValue("items", []);
+    reset();
     setValue("paymentTerms", 33455);
     setValue("invoiceId", generateRandomNumber());
   }

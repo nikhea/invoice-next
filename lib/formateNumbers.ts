@@ -18,7 +18,10 @@ export function calculateTotalAmount(
   let totalAmount = 0;
   if (typeof items !== "undefined") {
     for (const item of items) {
-      totalAmount += item.price * item.quantity;
+      if (item.price && item.quantity) {
+        //       total += quantity * price;
+        totalAmount += item.price * item.quantity;
+      }
     }
   }
   let amount = formatToCurrency(totalAmount);
