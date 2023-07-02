@@ -56,8 +56,6 @@ const mainForm = () => {
   });
   function onItemAdd() {
     append({ id: uuidv4() });
-    // const newItem = { quantity: "", price: "" };
-    // setItemState([...itemState, newItem]);
   }
 
   function onItemDelete(index: number) {
@@ -116,7 +114,7 @@ const mainForm = () => {
       });
     }
 
-    setValue("items", []);
+    // setValue("items", []);
     reset();
     setValue("paymentTerms", 33455);
     setValue("invoiceId", generateRandomNumber());
